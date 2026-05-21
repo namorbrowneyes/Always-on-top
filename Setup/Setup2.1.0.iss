@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "AlwaysOnTop"
-#define MyAppVersion "1.0"
+#define MyAppVersion "2.1.0"
 #define MyAppPublisher "Tobia Rigon"
 #define MyAppURL "https://github.com/namorbrowneyes/Always-on-top"
-#define MyAppExeName "AlwaysOnTop.exe"
+#define MyAppExeName "AlwaysOnTop_2.1.0.exe"
 
 [Setup]
 AppId={{A576C113-2BF6-453E-AF6E-1F27908130DD}
@@ -25,7 +25,7 @@ PrivilegesRequiredOverridesAllowed=dialog
 OutputDir=.\output
 OutputBaseFilename=AlwaysOnTop
 SetupIconFile=..\img\AOT_Icon32.ico
-Compression=lzma
+Compression=lzma2/ultra64
 SolidCompression=yes
 WizardStyle=modern
 WizardImageFile=..\img\AOT_InstallBanner.bmp
@@ -34,11 +34,11 @@ UninstallDisplayIcon={app}\{#MyAppExeName}
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
-Name: "french"; MessagesFile: "compiler:Languages\French.isl"
+;Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
-Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
-Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
-Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
+;Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
+;Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
+;Name: "turkish"; MessagesFile: "compiler:Languages\Turkish.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked

@@ -4,7 +4,7 @@
 #define MyAppName "AlwaysOnTop"
 #define MyAppVersion "1.0.1"
 #define MyAppPublisher "Tobia Rigon"
-#define MyAppURL "https://github.com/TobiaRigon/Always-on-top"
+#define MyAppURL "https://github.com/namorbrowneyes/Always-on-top"
 #define MyAppExeName "AlwaysOnTop_1.0.1.exe"
 
 [Setup]
