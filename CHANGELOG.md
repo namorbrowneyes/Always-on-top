@@ -11,6 +11,8 @@
     - Fixed multi-monitor positioning bug where negative screen coordinates (monitors left of primary) could misplace the indicator
     - Installer scripts (1.0.0, 1.0.1) now use relative paths — no longer hardcoded to original author's machine
     - Added Setup2.0.0.iss installer script for the AHK v2 build
+    - Changed indicator from aqua 🔼 box to transparent background with 🔒 lock emoji
+    - Fixed indicator appearing behind pinned window — now uses SetWindowPos(HWND_TOPMOST) to guarantee z-order above all topmost windows
 
 ## [2.0.0] - 2026-05-21
 

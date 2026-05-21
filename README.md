@@ -1,14 +1,14 @@
 # AlwaysOnTop AutoHotkey Script
 ![AOT_Icon32-1](https://github.com/user-attachments/assets/cb2024a0-5143-409e-b39f-38f141ae8b78)
 
-Toggle "Always on Top" for any window with a single hotkey. A small aqua indicator appears in the top-left corner while a window is pinned.
+Toggle "Always on Top" for any window with a single hotkey. A small transparent 🔒 indicator appears in the corner while a window is pinned.
 
 > **Fork of [TobiaRigon/Always-on-top](https://github.com/TobiaRigon/Always-on-top) — rewritten for AutoHotkey v2.**
 
 ## Features
 
 - **Toggle via `Ctrl + Space`** (default, configurable) — pins or unpins the active window instantly
-- **Visual indicator** — aqua 🔼 badge in the top-left corner while active
+- **Visual indicator** — transparent 🔒 badge in the corner while active (default: top-left, configurable)
 - **Single window at a time** — pinning a new window auto-unpins the previous one
 - **Auto-cleanup** — indicator disappears when the pinned window closes
 
@@ -48,7 +48,7 @@ Ahk2Exe ships with AutoHotkey v2 (under `C:\Program Files\AutoHotkey\Compiler\`)
 
 **Via command line:**
 ```
-Ahk2Exe.exe /in AlwaysOnTop.ahk /out Compiled\AlwaysOnTop_2.0.0.exe /icon img\AOT_Icon32.ico
+Ahk2Exe.exe /in AlwaysOnTop.ahk /out Compiled\AlwaysOnTop_2.1.0.exe /icon img\AOT_Icon32.ico
 ```
 
 ## Contributing
