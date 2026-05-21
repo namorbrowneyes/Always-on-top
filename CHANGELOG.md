@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0] - 2026-05-21
+
+### Changes:
+
+    - Rewritten for AutoHotkey v2 compatibility (v1 syntax is not supported in AHK v2)
+    - GUI created once at startup and reused (show/hide) rather than rebuilt each timer tick
+    - Replaced legacy WinGet/Winset/Gui commands with v2 API (WinGetID, WinGetExStyle, WinSetAlwaysOnTop, SetTimer with function reference)
+    - Removed IndicatorCreated flag — no longer needed with single-init GUI pattern
+    - Updated README with v2 requirements and startup instructions
+
+
 ## [1.0.1] - 2024-10-18
 
 ### Changes:

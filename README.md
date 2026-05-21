@@ -1,29 +1,40 @@
-# AlwaysOnTop AutoHotkey Script 
-![AOT_Icon32-1](https://github.com/user-attachments/assets/cb2024a0-5143-409e-b39f-38f141ae8b78) 
+# AlwaysOnTop AutoHotkey Script
+![AOT_Icon32-1](https://github.com/user-attachments/assets/cb2024a0-5143-409e-b39f-38f141ae8b78)
 
+Toggle "Always on Top" for any window with a single hotkey. A small aqua indicator appears in the top-left corner while a window is pinned.
 
-This AutoHotkey script allows you to easily toggle "Always on Top" mode for the currently active window using a keyboard shortcut. When the mode is active, a small visual indicator is displayed in the top-left corner of the window.
-Features
+> **Fork of [TobiaRigon/Always-on-top](https://github.com/TobiaRigon/Always-on-top) — rewritten for AutoHotkey v2.**
 
-    Toggle "Always on Top": Quickly enable or disable the "Always on Top" status for the currently active window using the Ctrl + Space keyboard shortcut.
-    Visual Indicator: A small, customizable indicator is displayed in the top-left corner of the active window when the mode is enabled.
-    Single Window Control: Only one window can be kept "Always on Top" at a time. Activating a new window will automatically disable the mode on the previous one.
-    Automatic Cleanup: The indicator is removed when the window is closed or the mode is disabled.
+## Features
 
-## Usage
+- **Toggle via `Ctrl + Space`** — pins or unpins the active window instantly
+- **Visual indicator** — aqua 🔼 badge in the top-left corner while active
+- **Single window at a time** — pinning a new window auto-unpins the previous one
+- **Auto-cleanup** — indicator disappears when the pinned window closes
 
-    Activate "Always on Top": Press Ctrl + Space to enable or disable "Always on Top" for the currently active window.
-    Visual Feedback: A small aqua-colored indicator with a "🔼" symbol appears in the top-left corner of the window to show that the mode is active.
-    Manage Multiple Windows: If you set another window to "Always on Top", the mode is automatically disabled for the previous window.
+## Requirements
+
+- [AutoHotkey v2](https://www.autohotkey.com/) (v2.0+)
 
 ## Installation
 
-    Install AutoHotkey: Download and install AutoHotkey.
-    Clone or Download: Clone this repository or download the AlwaysOnTop.ahk script.
-    Run the Script: Execute the script by double-clicking it, or right-click and select "Run Script" from the context menu.
+1. Install AutoHotkey v2
+2. Clone or download `AlwaysOnTop.ahk`
+3. Double-click the script to run it (or right-click → Run Script)
 
-Alternatively, you can compile the script into an .exe file using AutoHotkey's compiler tool, allowing it to be run without having AutoHotkey installed.
+**To run on startup:** place a shortcut to `AlwaysOnTop.ahk` in:
+```
+%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup
+```
+
+**To compile to a standalone .exe:** right-click the `.ahk` file → Compile Script (requires AHK v2 with compiler tools).
+
+## Hotkey
+
+| Hotkey | Action |
+|--------|--------|
+| `Ctrl + Space` | Toggle Always on Top for the active window |
 
 ## License
 
-This script is licensed under the MIT License. See the [LICENSE](https://github.com/TobiaRigon/Always-on-top/blob/main/LICENSE) file for more details.
+MIT — see [LICENSE](LICENSE)
