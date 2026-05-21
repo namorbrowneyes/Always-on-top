@@ -5,7 +5,7 @@
 DllCall("SetProcessDpiAwarenessContext", "Ptr", -4)
 
 ; ── Configuration ─────────────────────────────────────────────────────────────
-HOTKEY         := "^SPACE"   ; Hotkey to toggle — AHK v2 notation (^ Ctrl, ! Alt, + Shift, # Win)
+TOGGLE_KEY     := "^SPACE"   ; Hotkey to toggle — AHK v2 notation (^ Ctrl, ! Alt, + Shift, # Win)
 CORNER         := "TopLeft"  ; Indicator corner: TopLeft | TopRight | BottomLeft | BottomRight
 INDICATOR_BASE := 30         ; Indicator size in pixels at 96 DPI (100% scaling); auto-scaled on HiDPI
 ; ──────────────────────────────────────────────────────────────────────────────
@@ -28,7 +28,7 @@ BuildIndicator(dpi) {
 }
 
 BuildIndicator(DllCall("GetDpiForSystem", "UInt"))
-HotKey(HOTKEY, TogglePin)
+HotKey(TOGGLE_KEY, TogglePin)
 
 TogglePin(*) {
     global CurrentWindowID, IndicatorGui
