@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.1.0] - 2026-05-21
+
+### Changes:
+
+    - Added configurable hotkey via TOGGLE_KEY variable at top of script (default: Ctrl+Space)
+    - Added configurable indicator corner via CORNER variable (TopLeft | TopRight | BottomLeft | BottomRight)
+    - Added per-monitor DPI awareness — indicator now scales correctly on HiDPI displays and across mixed-DPI multi-monitor setups
+    - Indicator GUI is rebuilt automatically when the pinned window moves to a monitor with a different DPI
+    - Fixed multi-monitor positioning bug where negative screen coordinates (monitors left of primary) could misplace the indicator
+    - Installer scripts (1.0.0, 1.0.1) now use relative paths — no longer hardcoded to original author's machine
+    - Added Setup2.0.0.iss installer script for the AHK v2 build
+
 ## [2.0.0] - 2026-05-21
 
 ### Changes:
