@@ -22,9 +22,10 @@ BuildIndicator(dpi) {
     fsz  := Round(20 * dpi / 96)
     yOff := Round(-2 * dpi / 96)
     IndicatorGui := Gui("+AlwaysOnTop +ToolWindow -Caption -SysMenu +E0x20")
-    IndicatorGui.BackColor := "Aqua"
+    IndicatorGui.BackColor := "000000"
     IndicatorGui.SetFont("s" fsz, "Arial")
-    IndicatorGui.Add("Text", "x0 y" yOff " w" sz " h" sz " Center cWhite", "🔼")
+    IndicatorGui.Add("Text", "x0 y" yOff " w" sz " h" sz " Center cWhite", "🔒")
+    WinSetTransColor("000000", IndicatorGui)
 }
 
 BuildIndicator(DllCall("GetDpiForSystem", "UInt"))
@@ -75,5 +76,6 @@ UpdateIndicator() {
     iX := (CORNER = "TopRight" || CORNER = "BottomRight") ? X + W - sz : X
     iY := (CORNER = "BottomLeft" || CORNER = "BottomRight") ? Y + H - sz : Y
 
-    IndicatorGui.Show("NoActivate x" iX " y" iY " w" sz " h" sz)
+    DllCall("SetWindowPos", "Ptr", IndicatorGui.Hwnd, "Ptr", -1,
+        "Int", iX, "Int", iY, "Int", sz, "Int", sz, "UInt", 0x0050)  ; HWND_TOPMOST, SWP_NOACTIVATE|SWP_SHOWWINDOW
 }
