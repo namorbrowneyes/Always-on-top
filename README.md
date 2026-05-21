@@ -7,7 +7,7 @@ Toggle "Always on Top" for any window with a single hotkey. A small aqua indicat
 
 ## Features
 
-- **Toggle via `Ctrl + Space`** — pins or unpins the active window instantly
+- **Toggle via `Ctrl + Space`** (default, configurable) — pins or unpins the active window instantly
 - **Visual indicator** — aqua 🔼 badge in the top-left corner while active
 - **Single window at a time** — pinning a new window auto-unpins the previous one
 - **Auto-cleanup** — indicator disappears when the pinned window closes
@@ -32,6 +32,13 @@ Toggle "Always on Top" for any window with a single hotkey. A small aqua indicat
 | Hotkey | Action |
 |--------|--------|
 | `Ctrl + Space` | Toggle Always on Top for the active window |
+
+The hotkey and indicator corner can be changed at the top of `AlwaysOnTop.ahk`:
+
+```ahk
+TOGGLE_KEY := "^SPACE"  ; ^ Ctrl, ! Alt, + Shift, # Win
+CORNER     := "TopLeft" ; TopLeft | TopRight | BottomLeft | BottomRight
+```
 
 ## Compiling to a standalone .exe
 
