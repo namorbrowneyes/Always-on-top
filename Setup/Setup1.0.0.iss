@@ -20,16 +20,16 @@ DefaultDirName={autopf}\{#MyAppName}
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 DisableProgramGroupPage=yes
-LicenseFile=C:\Users\tobia\Documents\AutoHotkey\Always-on-top\LICENSE
+LicenseFile=..\LICENSE
 PrivilegesRequiredOverridesAllowed=dialog
-OutputDir=C:\Users\tobia\Documents\AutoHotkey\setup
+OutputDir=.\output
 OutputBaseFilename=AlwaysOnTop
-SetupIconFile=C:\Users\tobia\Documents\AutoHotkey\Always-on-top\AOT_Icon32.ico
+SetupIconFile=..\img\AOT_Icon32.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
-WizardImageFile=C:\Users\tobia\Documents\AutoHotkey\Always-on-top\AOT_InstallBanner.bmp
-WizardSmallImageFile=C:\Users\tobia\Documents\AutoHotkey\Always-on-top\AOT_SmallIcon.bmp
+WizardImageFile=..\img\AOT_InstallBanner.bmp
+WizardSmallImageFile=..\img\AOT_SmallIcon.bmp
 UninstallDisplayIcon={app}\{#MyAppExeName}
 
 [Languages]
@@ -45,7 +45,7 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "autoStart"; Description: "Start AlwaysOnTop automatically when Windows starts"; GroupDescription: "Additional tasks:"; Flags: unchecked
 
 [Files]
-Source: "C:\Users\tobia\Documents\AutoHotkey\Compiled\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Compiled\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

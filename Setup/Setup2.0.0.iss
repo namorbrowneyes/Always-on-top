@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "AlwaysOnTop"
-#define MyAppVersion "1.0.1"
+#define MyAppVersion "2.0.0"
 #define MyAppPublisher "Tobia Rigon"
 #define MyAppURL "https://github.com/TobiaRigon/Always-on-top"
-#define MyAppExeName "AlwaysOnTop_1.0.1.exe"
+#define MyAppExeName "AlwaysOnTop_2.0.0.exe"
 
 [Setup]
 AppId={{A576C113-2BF6-453E-AF6E-1F27908130DD}
