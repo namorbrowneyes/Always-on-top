@@ -38,7 +38,7 @@ local function buildCanvas()
   local s, h, a = CONFIG.size, CONFIG.halo, CONFIG.accent
   local c = hs.canvas.new({ x = 0, y = 0, w = CANVAS, h = CANVAS })
   c:level(hs.canvas.windowLevels.overlay)          -- above normal app windows
-  c:behaviorAsLabels({ "canJoinAllSpaces", "stationary" })
+  c:behaviorAsLabels({ "canJoinAllSpaces", "stationary", "fullScreenAuxiliary" })
   c:canvasMouseEvents(false, false, false, false)  -- click-through
   c:appendElements(
     {
@@ -91,6 +91,26 @@ local function pulseAll()
   end
 end
 
+-- Re-raise any pinned window that has slipped below a normal (non-pinned) window.
+-- Driven by polling the real z-order rather than focus events, because some apps
+-- (notably Microsoft Remote Desktop) take focus inside an embedded view or
+-- reorder themselves without emitting a windowFocused event we'd otherwise catch.
+-- Windows already on top are left alone, so there's no flicker.
+local function raisePinnedAboveNormal()
+  local ordered = hs.window.orderedWindows()   -- front (1) → back
+  local firstNormal
+  for i, w in ipairs(ordered) do
+    if not pinned[w:id()] then firstNormal = i; break end
+  end
+  if not firstNormal then return end           -- nothing normal in front of anything
+  for i = firstNormal + 1, #ordered do
+    local w = ordered[i]
+    if pinned[w:id()] then w:raise() end        -- pinned but below a normal window → lift it
+  end
+end
+
+local raiseTick = 0
+
 -- Reposition every badge; drop any whose window has vanished/hidden.
 local function followAll()
   for id, entry in pairs(pinned) do
@@ -100,6 +120,8 @@ local function followAll()
       M.unpinId(id)
     end
   end
+  raiseTick = (raiseTick + 1) % 3              -- ~every 0.3s alongside the 0.1s badge follow
+  if raiseTick == 0 then raisePinnedAboveNormal() end
 end
 
 local function timersRunning() return follower ~= nil end
