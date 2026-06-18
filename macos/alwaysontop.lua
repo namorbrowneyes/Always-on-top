@@ -17,6 +17,14 @@ local CONFIG = {
   corner = "TopLeft",  -- TopLeft | TopRight | BottomLeft | BottomRight
   size   = 30,         -- core badge size in points (Retina handled automatically)
 
+  -- Pseudo-fullscreen: maximize the focused window to fill its screen WITHOUT
+  -- using native macOS full-screen (which gives the app its own Space that no
+  -- pinned window can overlay). Use this on RDP instead of the green button so
+  -- pins keep floating over it. Set fillUnderMenuBar=true for true edge-to-edge.
+  maxMods        = {"ctrl", "alt"},
+  maxKey         = "f",
+  fillUnderMenuBar = false,  -- false: fills usable area (menu bar strip stays clear)
+
   -- Pulsing neon badge, amber/gold
   accent    = { red = 1.0, green = 0.75, blue = 0.10 }, -- amber/gold halo + rim
   halo      = 14,      -- glow padding around the core badge (points)
@@ -187,6 +195,19 @@ function M.unpinAll()
   for id in pairs(pinned) do M.unpinId(id) end
 end
 
+-- Maximize the focused window to fill its screen, staying a normal window (NOT
+-- native full-screen). Lets pinned windows float over apps like RDP that you'd
+-- otherwise run full-screen. Re-applies if its window is also pinned.
+function M.maximize()
+  local win = hs.window.focusedWindow()
+  if not win then return end
+  local scr = win:screen()
+  if not scr then return end
+  win:setFrame(CONFIG.fillUnderMenuBar and scr:fullFrame() or scr:frame())
+  if pinned[win:id()] then placeCanvas(pinned[win:id()]) end
+end
+
 hs.hotkey.bind(CONFIG.mods, CONFIG.key, M.toggle)
+hs.hotkey.bind(CONFIG.maxMods, CONFIG.maxKey, M.maximize)
 
 return M
