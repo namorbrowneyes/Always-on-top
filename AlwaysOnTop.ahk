@@ -10,72 +10,74 @@ CORNER         := "TopLeft"  ; Indicator corner: TopLeft | TopRight | BottomLeft
 INDICATOR_BASE := 30         ; Indicator size in pixels at 96 DPI (100% scaling); auto-scaled on HiDPI
 ; ──────────────────────────────────────────────────────────────────────────────
 
-CurrentWindowID := 0
-LastDpi         := 0
-IndicatorGui    := ""
+PinnedWindows := Map()  ; WindowID → {Gui: indicator Gui, Dpi: last seen DPI}
 
 BuildIndicator(dpi) {
-    global IndicatorGui, INDICATOR_BASE
-    if (IndicatorGui != "")
-        IndicatorGui.Destroy()
+    global INDICATOR_BASE
     sz   := Round(INDICATOR_BASE * dpi / 96)
     fsz  := Round(20 * dpi / 96)
     yOff := Round(-2 * dpi / 96)
-    IndicatorGui := Gui("+AlwaysOnTop +ToolWindow -Caption -SysMenu +E0x20")
-    IndicatorGui.BackColor := "000000"
-    IndicatorGui.SetFont("s" fsz, "Arial")
-    IndicatorGui.Add("Text", "x0 y" yOff " w" sz " h" sz " Center cWhite", "🔒")
-    WinSetTransColor("000000", IndicatorGui)
+    g := Gui("+AlwaysOnTop +ToolWindow -Caption -SysMenu +E0x20")
+    g.BackColor := "000000"
+    g.SetFont("s" fsz, "Arial")
+    g.Add("Text", "x0 y" yOff " w" sz " h" sz " Center cWhite", "🔒")
+    WinSetTransColor("000000", g)
+    return g
 }
 
-BuildIndicator(DllCall("GetDpiForSystem", "UInt"))
 HotKey(TOGGLE_KEY, TogglePin)
 
 TogglePin(*) {
-    global CurrentWindowID, IndicatorGui
+    global PinnedWindows
 
     WindowID := WinGetID("A")
     ExStyle  := WinGetExStyle("ahk_id " WindowID)
 
     if (ExStyle & 0x8) {
         WinSetAlwaysOnTop(0, "ahk_id " WindowID)
-        SetTimer(UpdateIndicator, 0)
-        IndicatorGui.Hide()
-        CurrentWindowID := 0
+        if PinnedWindows.Has(WindowID) {
+            PinnedWindows[WindowID].Gui.Destroy()
+            PinnedWindows.Delete(WindowID)
+        }
     } else {
-        if CurrentWindowID
-            WinSetAlwaysOnTop(0, "ahk_id " CurrentWindowID)
-        SetTimer(UpdateIndicator, 0)
-        IndicatorGui.Hide()
-
+        dpi := DllCall("GetDpiForWindow", "Ptr", WindowID, "UInt")
         WinSetAlwaysOnTop(1, "ahk_id " WindowID)
-        CurrentWindowID := WindowID
-        SetTimer(UpdateIndicator, 100)
+        PinnedWindows[WindowID] := {Gui: BuildIndicator(dpi), Dpi: dpi}
     }
+
+    if PinnedWindows.Count > 0
+        SetTimer(UpdateIndicator, 100)
+    else
+        SetTimer(UpdateIndicator, 0)
 }
 
 UpdateIndicator() {
-    global CurrentWindowID, LastDpi, IndicatorGui, CORNER, INDICATOR_BASE
+    global PinnedWindows, CORNER, INDICATOR_BASE
 
-    if !WinExist("ahk_id " CurrentWindowID) {
+    for WindowID, entry in PinnedWindows.Clone() {
+        if !WinExist("ahk_id " WindowID) {
+            entry.Gui.Destroy()
+            PinnedWindows.Delete(WindowID)
+            continue
+        }
+
+        WinGetPos(&X, &Y, &W, &H, "ahk_id " WindowID)
+        dpi := DllCall("GetDpiForWindow", "Ptr", WindowID, "UInt")
+        sz  := Round(INDICATOR_BASE * dpi / 96)
+
+        if (dpi != entry.Dpi) {
+            entry.Gui.Destroy()
+            entry.Gui := BuildIndicator(dpi)
+            entry.Dpi := dpi
+        }
+
+        iX := (CORNER = "TopRight" || CORNER = "BottomRight") ? X + W - sz : X
+        iY := (CORNER = "BottomLeft" || CORNER = "BottomRight") ? Y + H - sz : Y
+
+        DllCall("SetWindowPos", "Ptr", entry.Gui.Hwnd, "Ptr", -1,
+            "Int", iX, "Int", iY, "Int", sz, "Int", sz, "UInt", 0x0050)
+    }
+
+    if PinnedWindows.Count = 0
         SetTimer(UpdateIndicator, 0)
-        IndicatorGui.Hide()
-        CurrentWindowID := 0
-        return
-    }
-
-    WinGetPos(&X, &Y, &W, &H, "ahk_id " CurrentWindowID)
-    dpi := DllCall("GetDpiForWindow", "Ptr", CurrentWindowID, "UInt")
-    sz  := Round(INDICATOR_BASE * dpi / 96)
-
-    if (dpi != LastDpi) {
-        BuildIndicator(dpi)
-        LastDpi := dpi
-    }
-
-    iX := (CORNER = "TopRight" || CORNER = "BottomRight") ? X + W - sz : X
-    iY := (CORNER = "BottomLeft" || CORNER = "BottomRight") ? Y + H - sz : Y
-
-    DllCall("SetWindowPos", "Ptr", IndicatorGui.Hwnd, "Ptr", -1,
-        "Int", iX, "Int", iY, "Int", sz, "Int", sz, "UInt", 0x0050)  ; HWND_TOPMOST, SWP_NOACTIVATE|SWP_SHOWWINDOW
 }
